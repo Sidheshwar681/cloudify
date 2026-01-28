@@ -1,0 +1,178 @@
+@import "tailwindcss";
+
+/* App base styles using Tailwind's preflight */
+html, body, #root {
+  height: 100%;
+}
+
+/* Prefer Gilroy, with sensible fallbacks */
+body {
+  font-family: Gilroy, Inter, system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif;
+  cursor: none; /* hide default cursor for premium custom cursor */
+}
+
+@media (hover: none) {
+  body { cursor: auto; } /* keep cursor for touch devices */
+}
+
+/* Animated precipitation overlays */
+.weather-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+@keyframes fall {
+  0% { transform: translateY(-100vh) translateX(0); opacity: 0; }
+  10% { opacity: 0.9; }
+  100% { transform: translateY(100vh) translateX(10vw); opacity: 0; }
+}
+
+.raindrop, .snowflake {
+  position: absolute;
+  top: -10vh;
+  animation: fall linear infinite;
+}
+
+.raindrop {
+  width: 2px;
+  height: 18px;
+  background: rgba(255,255,255,0.55);
+  border-radius: 1px;
+  filter: blur(0.5px);
+}
+
+.snowflake {
+  width: 6px;
+  height: 6px;
+  background: rgba(255,255,255,0.9);
+  border-radius: 50%;
+  filter: blur(0.5px);
+}
+
+/* Sun rays */
+.sun-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: -20vmax;
+  background: conic-gradient(from 0deg, rgba(255,255,255,0.08), rgba(255,255,255,0) 25%)
+              , radial-gradient(circle at 60% 20%, rgba(255,255,255,0.18), rgba(255,255,255,0) 40%);
+  animation: spin 18s linear infinite;
+  mix-blend-mode: screen;
+}
+
+@keyframes spin {
+  to { transform: rotate(360deg); }
+}
+
+/* Vignette darken */
+.vignette::after {
+  content: '';
+  position: fixed;
+  inset: 0;
+  background: radial-gradient(circle at center, rgba(0,0,0,0) 45%, rgba(0,0,0,0.18));
+  pointer-events: none;
+}
+
+/* Night stars */
+.stars-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  background: transparent;
+  overflow: hidden;
+  z-index: 0;
+}
+
+.star {
+  position: absolute;
+  width: 2px;
+  height: 2px;
+  background: rgba(255,255,255,0.95);
+  border-radius: 50%;
+  animation: twinkle 2.2s ease-in-out infinite;
+  box-shadow: 0 0 8px rgba(255,255,255,0.8);
+}
+
+@keyframes twinkle {
+  0%, 100% { opacity: 0.2; transform: scale(0.9); }
+  50% { opacity: 1; transform: scale(1.2); }
+}
+
+/* Clouds */
+.clouds-overlay {
+  pointer-events: none;
+  position: fixed;
+  inset: 0;
+  overflow: hidden;
+}
+
+@keyframes drift {
+  0% { transform: translateX(-30vw); opacity: 0.6; }
+  50% { opacity: 0.85; }
+  100% { transform: translateX(130vw); opacity: 0.6; }
+}
+
+.cloud {
+  position: absolute;
+  top: 0;
+  width: 180px;
+  height: 60px;
+  background: radial-gradient(circle at 30% 50%, rgba(255,255,255,0.9), rgba(255,255,255,0.4) 60%),
+              radial-gradient(circle at 60% 60%, rgba(255,255,255,0.9), rgba(255,255,255,0.3) 70%),
+              radial-gradient(circle at 45% 40%, rgba(255,255,255,0.9), rgba(255,255,255,0.2) 80%);
+  border-radius: 40px;
+  filter: blur(0.5px);
+  animation: drift linear infinite;
+}
+
+/* Premium cursor */
+.cursor-ring {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 44px;
+  height: 44px;
+  margin-top: -22px;
+  margin-left: -22px;
+  border-radius: 9999px;
+  border: 1px solid rgba(255,255,255,0.8);
+  background: radial-gradient(circle, rgba(255,255,255,0.18), rgba(255,255,255,0.03));
+  box-shadow: 0 0 50px rgba(255,255,255,0.35);
+  pointer-events: none;
+  backdrop-filter: blur(3px) saturate(120%);
+  z-index: 50;
+}
+
+.cursor-dot {
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 8px;
+  height: 8px;
+  margin-top: -4px;
+  margin-left: -4px;
+  border-radius: 9999px;
+  background: rgba(255,255,255,0.95);
+  box-shadow: 0 0 14px rgba(255,255,255,0.9);
+  pointer-events: none;
+  z-index: 50;
+}
+
+/* Premium hover utility */
+.premium-hover {
+  transition: transform 200ms ease, box-shadow 200ms ease;
+}
+.premium-hover:hover {
+  transform: translateY(-3px) scale(1.02);
+  box-shadow: 0 20px 40px rgba(0,0,0,0.3);
+}
+
+/* Premium card utility */
+.card-premium {
+  background: linear-gradient(180deg, rgba(255,255,255,0.30), rgba(255,255,255,0.18));
+  border: 1px solid rgba(255,255,255,0.45);
+  backdrop-filter: blur(14px) saturate(150%);
+  box-shadow: 0 24px 60px rgba(0,0,0,0.35);
+}
